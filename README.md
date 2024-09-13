@@ -45,7 +45,10 @@ void main() {
 Here’s how to make a basic HTTP GET request:
 
 ```dart
+import 'package:example/models/user_index_response.dart';
 import 'package:mc_dio_wrapper/mc_dio_wrapper.dart';
+
+import 'api_endpoints.dart';
 
 class AppHttpController {
   final McHttpWrapper _httpService = McHttpWrapper();
@@ -67,7 +70,7 @@ class AppHttpController {
 
 ```
 
-### Enabling Logging
+### Enabling Features
 
 Enable various features such as logging, headers, API version, and caching for your HTTP requests and responses:
 
@@ -95,8 +98,6 @@ void main() {
 Set up custom error handling using dialog:
 
 ```dart
-import 'package:mc_dio_wrapper/src/interceptors/errors_handling_interceptor.dart';
-
 /// Inside your widget
 _loadData() {
   _controller.fetchUser().then((List<User> users) {
@@ -112,8 +113,6 @@ _loadData() {
 Set up custom error handling using toast error message:
 
 ```dart
-import 'package:mc_dio_wrapper/src/interceptors/errors_handling_interceptor.dart';
-
 /// Inside your widget
 _loadData(BuildContext context) {
   _controller.fetchUser().then((List<User> users) {
@@ -124,6 +123,12 @@ _loadData(BuildContext context) {
 }
 ```
 
-## Folder Structure
+### Steps to Use the Example Project
 
-Below is the folder structure for the main `mc_dio_wrapper` package:
+1. **Clone the repository** and navigate to the `example` directory.
+2. **Run `flutter pub get`** to install dependencies.
+3. **Run the example app** using `flutter run`.
+
+## License
+
+This project is licensed under the MIT License.

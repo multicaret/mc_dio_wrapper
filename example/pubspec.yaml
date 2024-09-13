@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.8
 
   mc_dio_wrapper:
-    path: ../
+    git: https://github.com/multicaret/mc_dio_wrapper
 
 dev_dependencies:
   flutter_test:

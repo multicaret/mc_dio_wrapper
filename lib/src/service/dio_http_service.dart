@@ -53,7 +53,7 @@ class DioHttpService<T> implements HttpServiceContract {
   Future<McResponse<E>> get<E extends BaseResponse>(
     String endpoint, {
     required E Function(Map<String, dynamic> json) converter,
-    Map<String, dynamic>? queryParameters,
+    RequestQueryParams? queryParameters,
     bool hasToken = false,
   }) async {
     endpoint = _urlValidator(endpoint);
@@ -84,8 +84,8 @@ class DioHttpService<T> implements HttpServiceContract {
   Future<McResponse<E>> post<E extends BaseResponse>(
     String endpoint, {
     required E Function(Map<String, dynamic> json) converter,
-    Map<String, dynamic>? queryParameters,
-    Map<String, dynamic>? payload,
+    RequestQueryParams? queryParameters,
+    HttpRequestPayload? payload,
     List<File>? galleryFiles,
     bool hasToken = false,
   }) async {
@@ -118,14 +118,23 @@ class DioHttpService<T> implements HttpServiceContract {
       // onReceiveProgress: _oRp,
     );
 
-    return response as McResponse<E>;
+    return McResponse<E>(
+      requestOptions: response.requestOptions,
+      data: response.data,
+      statusCode: response.statusCode,
+      headers: response.headers,
+      extra: response.extra,
+      isRedirect: response.isRedirect,
+      redirects: response.redirects,
+      statusMessage: response.statusMessage,
+    );
   }
 
   @override
   Future<McResponse<E>> delete<E extends BaseResponse>(
     String endpoint, {
     required E Function(Map<String, dynamic> json) converter,
-    Map<String, dynamic>? queryParameters,
+    RequestQueryParams? queryParameters,
     bool hasToken = false,
   }) async {
     endpoint = _urlValidator(endpoint);
@@ -138,7 +147,16 @@ class DioHttpService<T> implements HttpServiceContract {
       endpoint,
       queryParameters: queryParameters,
     );
-    return response as McResponse<E>;
+    return McResponse<E>(
+      requestOptions: response.requestOptions,
+      data: response.data,
+      statusCode: response.statusCode,
+      headers: response.headers,
+      extra: response.extra,
+      isRedirect: response.isRedirect,
+      redirects: response.redirects,
+      statusMessage: response.statusMessage,
+    );
   }
 
   String _urlValidator(String endpoint) {

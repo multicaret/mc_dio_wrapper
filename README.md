@@ -100,7 +100,7 @@ Set up custom error handling using dialog:
 ```dart
 /// Inside your widget
 _loadData() {
-  _controller.fetchUser().then((List<User> users) {
+  _controller.fetchUsers().then((List<User> users) {
     if (kDebugMode) {
       print('Users Length => ${users.length}');
     }
@@ -115,7 +115,7 @@ Set up custom error handling using toast error message:
 ```dart
 /// Inside your widget
 _loadData(BuildContext context) {
-  _controller.fetchUser().then((List<User> users) {
+  _controller.fetchUsers().then((List<User> users) {
     if (kDebugMode) {
       print('Users Length => ${users.length}');
     }

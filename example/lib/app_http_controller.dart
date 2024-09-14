@@ -6,7 +6,7 @@ import 'api_endpoints.dart';
 class AppHttpController {
   final McHttpWrapper _httpService = McHttpWrapper();
 
-  Future<List<User>> fetchUser() async {
+  Future<List<User>> fetchUsers() async {
     try {
       McResponse<UserIndexResponse> response = await _httpService.get<UserIndexResponse>(
         AppApiEndpoints.userIndex.path,

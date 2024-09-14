@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _controller.fetchUser().then((List<User> users) {
+    _controller.fetchUsers().then((List<User> users) {
       if (kDebugMode) {
         print('Users Length => ${users.length}');
       }

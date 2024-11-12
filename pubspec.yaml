@@ -1,6 +1,6 @@
 name: mc_dio_wrapper
 description: "A new Flutter package for Multicaret projects."
-version: 0.0.2
+version: 0.0.3
 homepage: https://multicaret.com
 
 environment:

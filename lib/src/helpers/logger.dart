@@ -97,13 +97,18 @@ class _AppTalkerLogger implements AppLoggerContract {
           break;
       }
     } else {
-      main_logger.log(message,
-          error: error, stackTrace: stackTrace, level: type.level, name: type.title);
+      main_logger.log(
+        message,
+        error: error,
+        stackTrace: stackTrace,
+        level: type.level,
+        name: '${PackageKeys.name} - (${type.title})',
+      );
     }
   }
 
   @override
-  void handle(error, [StackTrace? stackTrace, String? msg]) {
+  void handle(Object error, [StackTrace? stackTrace, String? msg]) {
     _talker.handle(error, stackTrace, msg);
   }
 }

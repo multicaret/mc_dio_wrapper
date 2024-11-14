@@ -3,8 +3,8 @@ import 'dart:async' show FutureOr;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:mc_dio_wrapper/src/alerts/app_alert_dialog.dart';
 import 'package:mc_dio_wrapper/src/alerts/app_show_toast.dart';
+import 'package:mc_dio_wrapper/src/alerts/os_native_alert_dialog.dart';
 import 'package:mc_dio_wrapper/src/helpers/extensions/dio_exception_type_extension.dart';
 import 'package:mc_dio_wrapper/src/helpers/extensions/string_extension.dart';
 import 'package:mc_dio_wrapper/src/helpers/logger.dart';
@@ -154,22 +154,19 @@ class McDioError extends DioException {
     }
   }
 
-  Future<bool?> _toDialogAlert(BuildContext context,
-      {required String titleKey, String? subtitle, String? content, bool result = false}) {
-    return showDialog<bool>(
+  Future<bool?> _toDialogAlert(
+    BuildContext context, {
+    required String titleKey,
+    String? subtitle,
+    String? content,
+    bool result = false,
+  }) {
+    return OsNativeAlertDialog<bool>(
       context: context,
-      builder: (BuildContext context) {
-        return AppAlertDialog(
-          icon: Icons.warning,
-          titleKey: titleKey,
-          subtitle: subtitle,
-          content: content != null ? Text(content) : null,
-          onConfirm: () {
-            Navigator.pop(context);
-          },
-        );
-      },
-    );
+      title: subtitle ?? 'Error!',
+      content: content,
+      result: result,
+    ).show();
   }
 
   static FutureOr<E?> handlerByToastMsg<E>(Object error, StackTrace? stackTrace) {

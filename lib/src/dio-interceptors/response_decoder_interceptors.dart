@@ -10,11 +10,11 @@ class DecoderInterceptors<T> extends QueuedInterceptor {
 
   DecoderInterceptors(this.conv, this.hasToken);
 
-  String get token => InitModel.token();
+  String get token => InitModel.token() ?? '';
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    if (hasToken) {
+    if (hasToken && token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
     }
     return super.onRequest(options, handler);

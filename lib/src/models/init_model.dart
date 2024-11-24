@@ -7,7 +7,7 @@ abstract final class InitModel {
   static LogDetails httpLoggerLevel = LogDetails.detailed;
   static Duration maxCacheAge = const Duration(days: 2);
   static String apiVersion = 'v1';
-  static ValueGetter<String> token = () => 'TA_G';
+  static ValueGetter<String?> token = () => null;
   static bool enableCaching = false;
   static bool isLocalizedApi = false;
 }

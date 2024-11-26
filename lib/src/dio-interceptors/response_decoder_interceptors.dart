@@ -1,6 +1,10 @@
+import 'dart:developer' show log;
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:mc_dio_wrapper/src/helpers/extensions/string_extension.dart';
 import 'package:mc_dio_wrapper/src/helpers/logger.dart';
+import 'package:mc_dio_wrapper/src/helpers/package_keys.dart';
 import 'package:mc_dio_wrapper/src/models/init_model.dart';
 import 'package:mc_dio_wrapper/src/models/mc_dio_error.dart';
 
@@ -15,7 +19,11 @@ class DecoderInterceptors<T> extends QueuedInterceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     if (hasToken && token.isNotEmpty) {
-      options.headers['Authorization'] = 'Bearer $token';
+      final String tokenValue = 'Bearer $token';
+      options.headers['Authorization'] = tokenValue;
+      if (!InitModel.httpLoggerLevel.isNone) {
+        _printToken(tokenValue);
+      }
     }
     return super.onRequest(options, handler);
   }
@@ -40,5 +48,17 @@ class DecoderInterceptors<T> extends QueuedInterceptor {
       response: response,
       type: DioExceptionType.unknown,
     );
+  }
+
+  void _printToken(String tokenValue) {
+    String substring = tokenValue.afterFirst('|').substring(0, 25);
+    String hiddenToken = tokenValue.replaceFirst(substring, '*' * substring.length);
+    String message = '𝍌 Headers: Authorization->$hiddenToken';
+    if (InitModel.httpLoggerLevel.isCompact) {
+      log(message, name: PackageKeys.name);
+    }
+    if (InitModel.httpLoggerLevel.isDetailed) {
+      AppLogger().info(message);
+    }
   }
 }

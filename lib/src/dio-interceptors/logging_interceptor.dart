@@ -18,40 +18,55 @@ class LoggingInterceptor implements Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    final AppLogger log = AppLogger();
-    log.divider();
-    log.info('➡️ ➡️ ➡️ Request');
-    log.info('----> ${options.method.toUpperCase()}:${options.uri.toString()}');
+    final StringBuffer onRequestBuffer = StringBuffer('\n');
+    onRequestBuffer.writeln('➡️ ➡️ ➡️ Request');
+    onRequestBuffer.writeln('----> ${options.method.toUpperCase()}:${options.uri.toString()}');
+
+    onRequestBuffer.writeln('𝍌 Headers:');
+    options.headers.forEach((String key, dynamic value) {
+      onRequestBuffer.writeln(' - $key->${value.toString()}');
+    });
+
     if (options.queryParameters.isNotEmpty) {
-      String params = '';
-      options.queryParameters.forEach((key, value) {
-        params += '🧪 $key:$value\n';
+      onRequestBuffer.writeln('Query Parameters:');
+      options.queryParameters.forEach((String key, dynamic value) {
+        onRequestBuffer.writeln('🧪 $key:$value');
       });
-      log.info('Query Parameters: \n$params');
     }
     if (options.data != null && options.data is FormData) {
       final FormData payload = options.data;
+
       payload.fields.toList().forEach((MapEntry<String, String> element) {
-        final String payloadLogString =
-            '📬 Post body ...key->value: ${element.key}->${element.value}';
-        final String clearedLog = kDebugMode ? payloadLogString : payloadLogString.clearLogPassword;
-        log.info(clearedLog);
+        final String payloadLine = '📬 Post body ...key->value: ${element.key}->${element.value}';
+        final String clearedLog = kDebugMode ? payloadLine : payloadLine.clearLogPassword;
+        onRequestBuffer.writeln(clearedLog);
       });
+
       payload.files.toList().forEach((MapEntry<String, MultipartFile> element) {
-        log.info('📂  Post files ...key->value: ${element.key}=>${element.value.filename}');
+        String fileText = '📂  Post files ...key->value: ${element.key}=>${element.value.filename}';
+        onRequestBuffer.writeln(fileText);
       });
     }
-    log.divider();
+    onRequestBuffer.writeln('-------------------------');
+
+    final AppLogger log = AppLogger();
+    log.info(onRequestBuffer.toString());
+
     return handler.next(options);
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    final AppLogger log = AppLogger();
-    log.info('⬅️ ⬅️ ⬅️ Response');
+    final StringBuffer onResponseBuffer = StringBuffer('\n');
+    onResponseBuffer.writeln('⬅️ ⬅️ ⬅️ Response');
+
     final String statusCode = response.statusCode != 200 ? '❌ ${response.statusCode} ❌' : '✅ 200 ✅';
-    log.info('<---- $statusCode ${response.requestOptions.uri.toString()}');
-    log.divider();
+    onResponseBuffer.writeln('<---- $statusCode ${response.requestOptions.uri.toString()}');
+    onResponseBuffer.writeln('-------------------------');
+
+    final AppLogger log = AppLogger();
+    log.info(onResponseBuffer.toString());
+
     return handler.next(response);
   }
 }

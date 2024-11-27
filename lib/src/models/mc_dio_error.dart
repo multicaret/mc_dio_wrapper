@@ -49,7 +49,7 @@ class McDioError extends DioException {
 
   @override
   String toString() {
-    String msg = 'AppDioError [${type.title}]: $message';
+    String msg = 'McDioError [${type.title}]: $message';
     if (error != null) {
       if (error is List) {
         List list = error as List;
@@ -100,7 +100,7 @@ class McDioError extends DioException {
   }
 
   Set<String> _loadErrorsFromMapErrorObject(Map mapError, Set<String> errorBuilder) {
-    for (var element in mapError.entries) {
+    for (MapEntry element in mapError.entries) {
       String inputErrorMessage = '';
       if (element.value is List) {
         final valueOfError = element.value;
@@ -128,7 +128,7 @@ class McDioError extends DioException {
   }
 
   Future<bool?> toDialogAlertByMessage(BuildContext context) {
-    final subtitle = message ?? response?.statusMessage;
+    final String? subtitle = message ?? response?.statusMessage;
     return _toDialogAlert(context, titleKey: 'An Error occurred', subtitle: subtitle);
   }
 
@@ -163,8 +163,8 @@ class McDioError extends DioException {
   }) {
     return OsNativeAlertDialog<bool>(
       context: context,
-      title: subtitle ?? 'Error!',
-      content: content,
+      title: titleKey,
+      content: '$subtitle\n$content',
       result: result,
     ).show();
   }
@@ -187,8 +187,7 @@ class McDioError extends DioException {
   }
 
   static McDioError of(Object errorObject, [StackTrace? stackTrace]) {
-    debugPrint('⚠️ AppDioError "of" method has been used.....');
-    AppLogger().error('AppDioError handler', errorObject, stackTrace);
+    AppLogger().error('McDioError handler', errorObject, stackTrace);
     if (errorObject is String) {
       return McDioError._fromString(errorObject, stackTrace);
     }

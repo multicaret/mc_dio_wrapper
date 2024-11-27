@@ -15,7 +15,7 @@ class ErrorsHandlingInterceptor implements Interceptor {
         message: response.data['message'] ?? response.statusMessage,
       );
       // boolean param is "Call Following Error Interceptor"; Must always true
-      return handler.reject(dioError, true);
+      return handler.reject(McDioError(dioError), true);
     }
     return handler.next(response);
   }
@@ -28,7 +28,7 @@ class ErrorsHandlingInterceptor implements Interceptor {
         requestOptions: err.requestOptions,
         reason: McDioError.noInternetConnectionKey,
       );
-      handler.reject(errorObject);
+      handler.reject(McDioError(errorObject));
       return;
     }
     String? errMsg = err.response?.data!['message'];
@@ -43,7 +43,7 @@ class ErrorsHandlingInterceptor implements Interceptor {
       message: errMsg ?? err.message,
     );
     AppLogger().handler(errorObject, errorObject.stackTrace);
-    handler.reject(errorObject);
+    handler.reject(McDioError(errorObject));
   }
 
   @override

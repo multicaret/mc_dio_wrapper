@@ -25,7 +25,9 @@ base class McWrapperBaseResponse<T> extends BaseResponse<T> {
   });
 }
 
-base class McHttpWrapper<T> extends DioHttpService<T> {}
+base class McHttpWrapper<T> extends DioHttpService<T> {
+  McHttpWrapper([super._localeCode = 'en']);
+}
 
 abstract class McHttpWrapperInitializer {
   static Future<void> by({

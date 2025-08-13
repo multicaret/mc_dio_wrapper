@@ -1,6 +1,6 @@
 name: mc_dio_wrapper
 description: "A new Flutter package for Multicaret projects."
-version: 0.0.9
+version: 0.0.10
 homepage: https://multicaret.com
 
 environment:
@@ -10,18 +10,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  dio: ^5.7.0
-  talker_dio_logger: ^4.4.1
-  talker_flutter: ^4.4.1
+  dio: ^5.9.0
+  talker_dio_logger: ^4.9.3
+  talker_flutter: ^4.9.3
   hive: ^2.2.3
-  dio_cache_interceptor: ^3.5.0
+  dio_cache_interceptor: ^4.0.3
   http_cache_hive_store: ^5.0.1
   uuid: ^4.5.1
   crypto: ^3.0.6
   recase: ^4.1.0
   path_provider: ^2.1.5
-  path: ^1.9.0
-  fluttertoast: ^8.2.8
+  path: ^1.9.1
+  fluttertoast: ^8.2.12
 
 dev_dependencies:
   test: ^1.25.7

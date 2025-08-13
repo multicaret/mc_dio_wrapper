@@ -230,8 +230,9 @@ class DioHttpService<T> implements HttpServiceContract {
     }
     final Dio dio = Dio(options);
     // McAppActionsInterceptor must be first.
-    // Todo(suheyl): [2024-09-13 - 3_27_p_m_] Active it.
-    // dio.interceptors.add(McAppActionsInterceptor());
+    if (InitModel.logoutDoer != null) {
+      dio.interceptors.add(LogoutActionsInterceptor());
+    }
 
     dio.interceptors.add(ErrorsHandlingInterceptor());
 
@@ -259,9 +260,6 @@ class DioHttpService<T> implements HttpServiceContract {
     if (InitModel.enableCaching) {
       CacheOptions cacheOptions = await _initCacheStorage();
       dio.interceptors.add(DioCacheInterceptor(options: cacheOptions));
-    }
-    if (InitModel.logoutDoer != null) {
-      dio.interceptors.add(LogoutActionsInterceptor());
     }
 
     return dio;

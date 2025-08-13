@@ -7,6 +7,8 @@ import 'package:http_cache_hive_store/http_cache_hive_store.dart';
 import 'package:mc_dio_wrapper/mc_dio_wrapper.dart';
 import 'package:mc_dio_wrapper/src/dio-interceptors/errors_handling_interceptor.dart';
 import 'package:mc_dio_wrapper/src/dio-interceptors/logging_interceptor.dart';
+import 'package:mc_dio_wrapper/src/dio-interceptors/logout_actions_interceptor.dart'
+    show LogoutActionsInterceptor;
 import 'package:mc_dio_wrapper/src/dio-interceptors/mini_logger_interceptors.dart';
 import 'package:mc_dio_wrapper/src/dio-interceptors/response_decoder_interceptors.dart';
 import 'package:mc_dio_wrapper/src/helpers/extensions/string_extension.dart';
@@ -257,6 +259,9 @@ class DioHttpService<T> implements HttpServiceContract {
     if (InitModel.enableCaching) {
       CacheOptions cacheOptions = await _initCacheStorage();
       dio.interceptors.add(DioCacheInterceptor(options: cacheOptions));
+    }
+    if (InitModel.logoutDoer != null) {
+      dio.interceptors.add(LogoutActionsInterceptor());
     }
 
     return dio;

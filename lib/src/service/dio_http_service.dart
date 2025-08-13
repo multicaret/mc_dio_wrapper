@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart' hide BaseResponse;
 import 'package:flutter/foundation.dart';
 import 'package:http_cache_hive_store/http_cache_hive_store.dart';
 import 'package:mc_dio_wrapper/mc_dio_wrapper.dart';
@@ -268,7 +268,6 @@ class DioHttpService<T> implements HttpServiceContract {
     HiveCacheStore cacheStore = HiveCacheStore(path);
     CacheOptions cacheOptions = CacheOptions(
       store: cacheStore as CacheStore,
-      hitCacheOnErrorExcept: [], // for offline behaviour
     );
     return cacheOptions;
   }

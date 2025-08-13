@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:mc_dio_wrapper/src/models/init_model.dart' show InitModel;
 
 class LogoutActionsInterceptor implements Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
     if (err.response != null && err.response!.statusCode == 401) {
-      // AppActionNavigator.doAction(AppAction.logOutUser);
+      InitModel.logoutDoer?.call(InitModel.logoutDoerParam);
     }
     return handler.next(err);
   }
@@ -17,7 +18,7 @@ class LogoutActionsInterceptor implements Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     if (response.statusCode == 401) {
-      // AppActionNavigator.doAction(AppAction.logOutUser);
+      InitModel.logoutDoer?.call(InitModel.logoutDoerParam);
     }
     return handler.next(response);
   }

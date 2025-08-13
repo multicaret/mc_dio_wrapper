@@ -1,4 +1,4 @@
-library mc_dio_wrapper;
+library;
 
 import 'package:flutter/foundation.dart';
 import 'package:mc_dio_wrapper/src/interfaces/base_response.dart';
@@ -38,6 +38,8 @@ abstract class McHttpWrapperInitializer {
     bool enableCaching = false,
     bool isLocalizedApi = false,
     ValueGetter<String?>? tokenLoader,
+    ValueSetter? logoutDoer,
+    dynamic logoutDoerParam,
   }) async {
     InitModel.apiBaseUrl = baseUrl;
     InitModel.extraHeaders = headers;
@@ -45,6 +47,8 @@ abstract class McHttpWrapperInitializer {
     InitModel.httpLoggerLevel = httpLoggerLevel;
     InitModel.enableCaching = enableCaching;
     InitModel.isLocalizedApi = isLocalizedApi;
+    InitModel.logoutDoer = logoutDoer;
+    InitModel.logoutDoerParam = logoutDoerParam;
     if (tokenLoader != null) {
       InitModel.token = tokenLoader;
     }

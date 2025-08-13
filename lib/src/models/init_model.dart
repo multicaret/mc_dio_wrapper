@@ -10,4 +10,6 @@ abstract final class InitModel {
   static ValueGetter<String?> token = () => null;
   static bool enableCaching = false;
   static bool isLocalizedApi = false;
+  static ValueSetter? logoutDoer;
+  static dynamic logoutDoerParam;
 }

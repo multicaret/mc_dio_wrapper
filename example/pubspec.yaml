@@ -38,6 +38,7 @@ dependencies:
 
   mc_dio_wrapper:
     git: https://github.com/multicaret/mc_dio_wrapper
+    version: ^0.0.9
 
 dev_dependencies:
   flutter_test:
